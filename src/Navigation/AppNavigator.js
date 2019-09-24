@@ -13,7 +13,11 @@ import Profile from '../components/screens/Profile';
 import Tickets from '../components/screens/Tickets';
 import Login from '../components/screens/Login';
 import Signup from '../components/screens/Signup';
+import EventTypes from '../components/lists/EventTypes'
+import Places from '../components/lists/Places'
+import Dates from '../components/lists/Date'
 
+// Stacknavigator for bottom tab 'Profile'
 const ProfileStack = createStackNavigator({
     Profile: {screen: Signup}, 
     Login: {screen: Login},
@@ -21,10 +25,31 @@ const ProfileStack = createStackNavigator({
   },{
     headerMode: 'none',
     navigationOptions: {
-      headerVisible: false,
+      headerVisible: false
     }
   })
+
+  //Stacknavigator for bottom tab 'search'
+  const SearchStack = createStackNavigator({
+    Search: {
+      screen: Search,
+      navigationOptions: {
+        header: null
+      }
+    }, 
+    EventTypes: {
+      screen: EventTypes,
+      navigationOptions: {
+        title: 'Back'
+      }
+    },
+    Places: {screen: Places},
+    Date: {screen: Dates},
+  },{
+    mode: 'modal'
+  })
   
+  // Bottom tab navigators (Home, Search, Wishlist, Tickets and Profile)
   const AppTabNavigator = createMaterialBottomTabNavigator({
     Home: { 
       screen: Home,
@@ -36,7 +61,7 @@ const ProfileStack = createStackNavigator({
       } 
     },
     Search: { 
-      screen: Search,
+      screen: SearchStack,
       navigationOptions:{
         tabBarLabel: 'Search',
         tabBarIcon: ({tintColor}) => (

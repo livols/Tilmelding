@@ -7,7 +7,6 @@ export default class Home extends React.Component {
       return (
         <View style={styles.container}>
         <View style={styles.container}>
-          <Text style={styles.text}>Hello</Text>
         </View>
         <LinearGradient
           colors={['#FF4081', 'transparent']}
@@ -19,7 +18,6 @@ export default class Home extends React.Component {
             height: 500,
           }}
         />
-        <Text style={styles.text}>Hello</Text>
       </View>
       );
     }

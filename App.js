@@ -13,28 +13,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 export default class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      isLoggedIn: false
-    } 
-  }
-
-  componentDidMount() {
-    let listener = firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            this.setState({
-                isLoggedIn: true
-            })
-            listener();
-        } else {
-            this.setState({
-                isLoggedIn: false
-            })
-            listener();
-        }
-    })
-  }
 
   render() {
     return <AppNavigator/>;

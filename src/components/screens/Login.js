@@ -7,8 +7,7 @@ import Logo from '../Utils/Logo';
 
 export default class Login extends React.Component {
   constructor(props){
-    super(props)
-
+    super(props);
     this.state = ({
       email: '',
       password: ''
@@ -18,11 +17,14 @@ export default class Login extends React.Component {
   loginUser = () => {
     const { email, password } = this.state;
     try {
+      // Log user in with existing email and password
       firebase.auth().signInWithEmailAndPassword(email, password).then(function (user) {
         console.log(user);
       })
+      // Navigate user to the profile
+      this.props.navigation.navigate('Profile');
     } catch (error) {
-      
+        console.log(error.toString())
     }
   }
 

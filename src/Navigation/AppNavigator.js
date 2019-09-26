@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconF from 'react-native-vector-icons/FontAwesome';
@@ -17,19 +17,12 @@ import EventTypes from '../components/lists/EventTypes'
 import Places from '../components/lists/Places'
 import Dates from '../components/lists/Date'
 
-  const SignedOut = createStackNavigator({
-    Signup: {
-      screen: Signup,
-      navigationOptions: {
-        header: null
-      }
-    },
-    Login: {
-      screen: Login,
-      navigationOptions: {
-        header: null
-      }
-    }
+  const ProfileSwitchNavigator = createSwitchNavigator(
+  {
+    Profile,
+    Signup,
+    Login
+  },{
   });
 
   //Stacknavigator for bottom tab 'search'
@@ -91,7 +84,7 @@ import Dates from '../components/lists/Date'
       }
     },
     Profile: { 
-      screen: Profile,
+      screen: ProfileSwitchNavigator,
       navigationOptions:{
         tabBarLabel: 'Profile',
         tabBarIcon: ({tintColor}) => (

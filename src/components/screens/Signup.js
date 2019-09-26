@@ -9,7 +9,6 @@ export default class Signup extends React.Component {
   constructor(props){
     super(props);
     this.state = ({
-      name: '',
       email: '',
       password: ''
     })
@@ -22,7 +21,10 @@ export default class Signup extends React.Component {
         alert('Please enter atleast 6 characters');
         return;        
       }
+      // Create new user
       firebase.auth().createUserWithEmailAndPassword(email, password);
+      // Navigate user to the profile
+      this.props.navigation.navigate('Profile');
       
     } catch (error) {
         console.log(error.toString())
@@ -34,7 +36,7 @@ export default class Signup extends React.Component {
       const {type, token} = await Facebook.logInWithReadPermissionsAsync( '709225182876997', { 
         permissions: ['public_profile'] });
       
-      // if facebook login is succesful
+      // If facebook login is succesful
       if(type === 'success'){
         const credential = firebase.auth.FacebookAuthProvider.credential(token);
   

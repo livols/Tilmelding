@@ -1,6 +1,7 @@
 import React from 'react';
 import AppNavigator from './src/Navigation/AppNavigator';
 import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -11,6 +12,8 @@ const firebaseConfig = {
     storageBucket: "",
 };
 firebase.initializeApp(firebaseConfig);
+
+export const db = firebase.firestore();
 
 export default class App extends React.Component {
 

@@ -1,9 +1,11 @@
+// Login.js: is the login screen for user.
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase';
 import * as Facebook from 'expo-facebook';
 import Logo from '../Utils/Logo';
+import {AsyncStorage} from 'react-native';
 
 export default class Login extends React.Component {
   constructor(props){
@@ -14,38 +16,51 @@ export default class Login extends React.Component {
     })
   }
 
+  // Function for login with email and password
   loginUser = () => {
     const { email, password } = this.state;
     try {
-      // Log user in with existing email and password
-      firebase.auth().signInWithEmailAndPassword(email, password).then(function (user) {
-        console.log(user);
-      })
-      // Navigate user to the profile
-      this.props.navigation.navigate('Profile');
+      // Authenticate user with firebase, using email and password to login existing user
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(()=>{
+          console.log('Succesful login')
+        })
+        // Catch authentication error
+        .catch((error)=> {
+          console.log(error.code);
+          // Display authentication error message to user
+          alert(error.message);
+        });
     } catch (error) {
         console.log(error.toString())
     }
   }
 
-  async loginWithFacebook(){
-    try {
-      const {type, token} = await Facebook.logInWithReadPermissionsAsync( '709225182876997', { 
-        permissions: ['public_profile'] });
-      
-      // if facebook login is succesful
-      if(type === 'success'){
-        const credential = firebase.auth.FacebookAuthProvider.credential(token);
-        firebase.auth().signInWithCredential(credential).catch((error) => {
-          console.log(error);
-        })
-      }  
-    } catch (error) {
-        //alert(`Facebook Login Error: ${error}`);
-        console.log(error);
-    }
+  // Firebase login with credential from the Facebook user.
+  FBfirebaseLogin = (token) => {
+    // Using token to get access to use Facebook HTTP API requests
+    const credential = firebase.auth.FacebookAuthProvider.credential(token);
+    firebase.auth().signInWithCredential(credential).catch((error) => {
+      console.log("Error login with facebook user credential: ", error)
+    });
+  };
 
-  }
+  // Function login with facebook
+  async loginWithFacebook() {
+    try {
+      // logInWithReadPermissionAsync(appID, options), grants the app permission to access Facebook data.
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync('709225182876997', {
+        permissions: ['public_profile', 'email'],
+      });
+      if (type === 'success') {
+        this.FBfirebaseLogin(token);
+        // Saving token in AsyncStorage. Token will be used in screen 'Profile', to get user data
+        await AsyncStorage.setItem('token', token);
+      }
+    } catch (error) {
+      console.log('Facebook login error: ', error);
+    }
+  };
 
   render(){
     return (
@@ -61,9 +76,8 @@ export default class Login extends React.Component {
           keyboardType='email-address'
           autoCapitalize='none'
           autoCorrect={false}
-          /* This is the reference to email inputfield */
-          ref={(input) => this.email = input}
           onChangeText={(text) => this.setState({email: text})}
+          /* When user press enter, this function will send user to password inputfield */
           onSubmitEditing={() => this.password.focus()}
           />
           {/* Inputfield for password */}
@@ -74,6 +88,7 @@ export default class Login extends React.Component {
           autoCapitalize='none'
           autoCorrect={false}
           placeholderTextColor= 'white'
+          /* This is the reference to password inputfield */
           ref={(input) => this.password = input}
           onChangeText={(text) => this.setState({password: text})}
           />
@@ -93,7 +108,7 @@ export default class Login extends React.Component {
               <Text style={styles.facebookButtonText}> Continue with Facebook</Text>
             </View>
           </TouchableOpacity>
-      </View>
+        </View>
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Don't have an account yet?</Text>
           <Text style={styles.signupButtton}

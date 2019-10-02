@@ -1,54 +1,59 @@
+// Signup.js: is the signup screen for user.
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import * as firebase from 'firebase';
-import * as Facebook from 'expo-facebook';
+import 'firebase/firestore';
 import Logo from '../Utils/Logo';
 
 export default class Signup extends React.Component {
   constructor(props){
     super(props);
     this.state = ({
+      name: '',
       email: '',
       password: ''
     })
   }
 
+  // Function for user signup
   signUpUser = () => {
-    const { email, password } = this.state;
+    const { name, email, password } = this.state;
     try {
-      if (this.state.password < 6) {
-        alert('Please enter atleast 6 characters');
-        return;        
-      }
-      // Create new user
-      firebase.auth().createUserWithEmailAndPassword(email, password);
-      // Navigate user to the profile
-      this.props.navigation.navigate('Profile');
-      
+      // Authenticate user with firebase, using email and password to create a new user
+      // When a user is created in firebase authentication, they will get a unique user-UID
+      var promise = firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('Succesfully created a user, with signup')
+        })
+        // Catch authentication error
+        .catch((error) => {
+          console.log(error.code);
+          // Display authentication error message to user
+          alert(error.message);
+        });
+      // Store new user in firestore
+      this.AddDataToFirestore(promise, name, email);
     } catch (error) {
         console.log(error.toString())
     }
   }
 
-  async loginWithFacebook(){
-    try {
-      const {type, token} = await Facebook.logInWithReadPermissionsAsync( '709225182876997', { 
-        permissions: ['public_profile'] });
-      
-      // If facebook login is succesful
-      if(type === 'success'){
-        const credential = firebase.auth.FacebookAuthProvider.credential(token);
-  
-        firebase.auth().signInWithCredential(credential).catch((error) => {
-          console.log(error);
-        })
-      }  
-    } catch (error) {
-        //alert(`Facebook Login Error: ${error}`);
-        console.log(error);
-    }
+  // Function for storing a new user in firestore
+  AddDataToFirestore = (promise, name, email) => {
+    promise.then(() => {
+      var userUid = firebase.auth().currentUser.uid;
+      var db = firebase.firestore(); // Initialize firestore database
 
+      // User will be stored in the collection called 'users'
+      // The name of the document will be user-UID from the authentication part(above)
+      db.collection('users').doc(userUid).set({
+          name: name, // set name
+          email: email // set email
+      });
+    })
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
   }
 
   render(){
@@ -56,18 +61,17 @@ export default class Signup extends React.Component {
       <View style={styles.container}>
         <Logo/>
         <View style={styles.formContainer}>
-          {/* Inputfield for name
+          {/* Inputfield for name*/}
           <TextInput style={styles.formInputBox} 
           underlineColorAndroid='rgba(0,0,0,0)'
           placeholder="Name"
           placeholderTextColor= 'white'
           selectionColor='white'
-          onChangeText={(text) => this.setState({name: text})}
-          /* When user clicks enter on keyboard,
-          it automatically go to email inputfield
+          onChangeText={(name) => this.setState({name})}
+          /* When user press enter, this function will send user to email inputfield */
           onSubmitEditing={() => this.email.focus()}
-          />*/
-          /* Inputfield for email */}
+          />
+          {/* Inputfield for email */}
           <TextInput style={styles.formInputBox} 
           underlineColorAndroid='rgba(0,0,0,0)'
           placeholder="Email"
@@ -97,16 +101,6 @@ export default class Signup extends React.Component {
           style={styles.formButton}
           onPress={() => this.signUpUser()}>
               <Text style={styles.formButtonText}>Signup</Text>
-          </TouchableOpacity>
-          <Text style={styles.signupText}>or</Text>
-          {/* Button to Login with facebook */}
-          <TouchableOpacity 
-          style={styles.facebookButton}
-          onPress={() => this.loginWithFacebook()}>
-            <View style={styles.facebookNestedButtonView}>
-              <Icon name='facebook' size={25} color='white'/>
-              <Text style={styles.facebookButtonText}> Continue with Facebook</Text>
-            </View>
           </TouchableOpacity>
       </View>
         <View style={styles.signupTextCont}>

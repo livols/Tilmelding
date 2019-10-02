@@ -1,3 +1,4 @@
+// AppNavigator.js: is the navigation for the app.
 import React from 'react';
 
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -13,15 +14,17 @@ import Profile from '../components/screens/Profile';
 import Tickets from '../components/screens/Tickets';
 import Signup from '../components/screens/Signup';
 import Login from '../components/screens/Login';
+import Loading from '../components/screens/Loading'
 import EventTypes from '../components/lists/EventTypes'
 import Places from '../components/lists/Places'
 import Dates from '../components/lists/Date'
 
   const ProfileSwitchNavigator = createSwitchNavigator(
   {
-    Profile,
+    Loading,
     Signup,
-    Login
+    Login,
+    Profile
   },{
   });
 

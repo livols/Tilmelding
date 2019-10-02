@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-firebase/firestore": "^6.0.0",
     "expo": "^34.0.1",
     "expo-facebook": "^6.0.0",
     "expo-sqlite": "^6.0.0",
@@ -16,6 +17,7 @@
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
     "react-native-elements": "^1.2.0",
+    "react-native-fbsdk": "^1.0.4",
     "react-native-paper": "^2.16.0",
     "react-native-router-flux": "^4.0.6",
     "react-native-web": "^0.11.4",

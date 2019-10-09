@@ -18,7 +18,11 @@ import Loading from '../components/screens/Loading'
 import EventTypes from '../components/lists/EventTypes'
 import Places from '../components/lists/Places'
 import Dates from '../components/lists/Date'
+import Locations from '../components/lists/Locations'
+import CardInfo from '../components/Utils/CardInfo'
+import Booking from '../components/screens/Booking'
 
+  // Switchnavigator for bottom tab 'profile'
   const ProfileSwitchNavigator = createSwitchNavigator(
   {
     Loading,
@@ -28,7 +32,22 @@ import Dates from '../components/lists/Date'
   },{
   });
 
-  //Stacknavigator for bottom tab 'search'
+  // Stacknavigator for bottom tab 'home'
+  const HomeStack = createStackNavigator({
+    Search: {
+      screen: Home,
+      navigationOptions: {
+        header: null
+      }
+    }, 
+    Locations: { screen: Locations },
+    CardInfo: {screen: CardInfo},
+    Booking: {screen: Booking}
+  },{
+    mode: 'modal'
+  })
+
+  // Stacknavigator for bottom tab 'search'
   const SearchStack = createStackNavigator({
     Search: {
       screen: Search,
@@ -51,7 +70,7 @@ import Dates from '../components/lists/Date'
   // Bottom tab navigators (Home, Search, Wishlist, Tickets and Profile)
   const AppTabNavigator = createMaterialBottomTabNavigator({
     Home: { 
-      screen: Home,
+      screen: HomeStack,
       navigationOptions: {
         tabBarLabel: 'Home',
         tabBarIcon: ({tintColor}) => (

@@ -1,13 +1,12 @@
 import React from 'react';
-import { StyleSheet, FlatList, Text, View, Alert, TouchableHighlight } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, FlatList, Text, View, Alert, TouchableHighlight, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class EventTypes extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      EventTypes: [
+      eventTypes: [
          { id: '1', value: 'Auto, Boat & Air' },{ id: '2', value: 'Business' },{ id: '3', value: 'Charity & Causes' },
          { id: '4', value: 'Community' },{ id: '5', value: 'Family & Education' },{ id: '6', value: 'Fashion' },
          { id: '7', value: 'Film & Media' },{ id: '8', value: 'Food & Drink' },{ id: '9', value: 'Government' },
@@ -17,36 +16,28 @@ export default class EventTypes extends React.Component {
          { id: '19', value: 'Spirituality' },{ id: '20', value: 'Sports & Fitness' },{ id: '21', value: 'Travel & Outdoor' }],
     };
   }
-  FlatListItemSeparator = () => {
-    return (
-      //Item Separator
-      <View style={{height: 0.5, width: '100%', backgroundColor: '#C8C8C8'}}/>
-    );
-  };
+
+  //Function for click on an item
   GetItem(item){
-    //Function for click on an item
     Alert.alert(item);
   }
-  addIcon(){
-    <Icon name="ios-search" size={30} color="#900" />
-  }
+
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.state.EventTypes}
-          //data defined in constructor
-          ItemSeparatorComponent={this.FlatListItemSeparator}
-          //Item Separator View
+          data={this.state.eventTypes}
           renderItem={({ item }) => (
             // Single Comes here which will be repeatative for the FlatListItems
             <View>
-              <Text 
+                <TouchableOpacity
                 style={styles.item}
-                onPress={this.GetItem.bind(this, 'Id : '+item.id+' Value : '+item.value)}
-                >
-                {item.value}
-              </Text>
+                onPress={this.GetItem.bind(this, 'Id : '+item.id+' Value : '+item.value)}>
+                    <Text
+                    style={styles.text}>
+                    {item.value}
+                    </Text>
+                </TouchableOpacity>
             </View>
           )}
           keyExtractor={(item, index) => index.toString()}
@@ -57,15 +48,32 @@ export default class EventTypes extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: '#212121'
   },
- 
   item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
-    color: 'black'
+    backgroundColor: '#C51162',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginBottom: 5,
+    marginTop: 10,
+    marginLeft: '2%',
+    width: '96%',
+    height: 45,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+    shadowOffset: {
+    width: 3,
+    height: 3,
+    }
   },
+  text: {
+      fontSize: 16,
+      color: 'white',
+      marginStart: 12
+  }
 });

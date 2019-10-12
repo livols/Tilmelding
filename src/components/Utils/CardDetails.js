@@ -1,12 +1,18 @@
 // CardInfo.js: is the screen that displays information about an event user has chosen. 
 // User is also able buy tickets.
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Card } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Dropdown } from 'react-native-material-dropdown';
 
+const screenWidth = Math.round(Dimensions.get('window').width);
+const screenHeight = Math.round(Dimensions.get('window').height);
+
 export default class CardInfo extends React.Component {
+    static navigationOptions = {
+      title: 'Event',
+    };
     constructor(props){
       super(props);
       this.state={
@@ -38,8 +44,11 @@ export default class CardInfo extends React.Component {
     
     // When user presses 'Book now' button, it will navigate to Booking screen and pass params to route
     _onPress = (item) => {
-      this.props.navigation.navigate('Booking', {
-        propsItem: item
+      const totalPrice = item.price * this.state.value;
+      this.props.navigation.navigate('Order', {
+        propsItem: item,
+        total: totalPrice,
+        noTickets: this.state.value
       });
     }
 
@@ -117,7 +126,7 @@ export default class CardInfo extends React.Component {
               <Text style={styles.details}>
                 There is {item.tickets} available tickets left. 
                 {"\n"}
-                Buy ticket below.
+                Choose number of tickets, and then press button to book event.
               </Text>
               {/* Dropdownlist where user chooses number of tickets*/}
               <View style={styles.buttonContainer}>
@@ -131,13 +140,15 @@ export default class CardInfo extends React.Component {
                 />
               </View>
               {/* Total price is displayed*/}
-              <Text style={styles.details}>
-                Total price: {item.price * this.state.value} kr.
-              </Text>
+              <View style={styles.totalPriceNestedTextView}>
+                <Text style={styles.infoTextDescription}>Total price:</Text>
+                <Text style={styles.infoText}>{item.price * this.state.value} kr.</Text>
+              </View>
               {/* Button 'Book now' where user can buy tickets event*/}
               <View style={styles.buttonContainer}>
                 <TouchableOpacity 
                 style={styles.button}
+                disabled={!this.state.value}
                 onPress={() => this._onPress(item)}>
                   <Text style={styles.buttonText}>Book now</Text>
                 </TouchableOpacity>
@@ -192,6 +203,23 @@ export default class CardInfo extends React.Component {
     descriptionText: {
       fontSize: 14
     },
+    totalPriceNestedTextView: {
+      flexDirection: 'row',
+      marginHorizontal: 10,
+      marginTop: 10,
+      marginBottom: 10
+    },
+    infoTextDescription: {
+      fontSize: 14,
+      flex: 1,
+      color: 'black',
+      fontWeight: '500'
+    },
+    infoText: {
+      fontSize: 14,
+      flex: 1,
+      color: 'black'
+    },
     buttonContainer: {
       flexDirection: 'row',
       justifyContent: 'center'
@@ -211,6 +239,6 @@ export default class CardInfo extends React.Component {
       fontWeight: '500'
     },
     dropdown: {
-      width: '95%'
+      width: '94%'
     }
   });

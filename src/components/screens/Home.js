@@ -15,23 +15,19 @@ export default class Home extends React.Component {
   }
 
   componentDidMount(){
-    this.retrieveData();
+    this.retrieveEvents();
   }
 
-  // Function to retrieve all documents from events collection
-  retrieveData = async () => {
+  // Function to retrieve all events stored in firestore
+  retrieveEvents = async () => {
     try {
       console.log('Retrieving Data');
-      // Initialize firestore database
-      var db = firebase.firestore(); 
-      let initialQuery = await db.collection('events')
+      var db = firebase.firestore(); // Initialize firestore database
+      let initialQuery = await db.collection('events') // Storing collection with events in variable initialQuery, and order events by date
         .orderBy('date')
-      // Get collection events, and order by date
-      let documentSnapshots = await initialQuery.get();
-      // Store data from firestore in documentData
-      let documentData = documentSnapshots.docs.map(document => document.data());
-      // Set state array items, to document data
-      this.setState({ events: documentData });
+      let documentSnapshots = await initialQuery.get(); // Get collection events, and order by date
+      let documentData = documentSnapshots.docs.map(document => document.data()); // Store events from firestore in documentData
+      this.setState({ events: documentData }); // Set state array events, to documentData
     }
     catch (error) {
       console.log(error);
@@ -58,7 +54,7 @@ export default class Home extends React.Component {
 
   // When user presses on one of the events, it will navigate to CardInfo screen and pass params to route
   _onPress = (item) => {
-    this.props.navigation.navigate('CardInfo', {
+    this.props.navigation.navigate('CardDetails', {
       propsItem: item
     });
   }
@@ -68,6 +64,7 @@ export default class Home extends React.Component {
     if (this.state.events.length === 0) {
       return(
         <View style={styles.loader}>
+          <Text style={styles.infoSmall}>Please wait a moment...</Text>
           <ActivityIndicator size="large" color='#C51162'/>
         </View>
       )
@@ -114,8 +111,16 @@ export default class Home extends React.Component {
     },
     loader: {
       flex: 1,
+      backgroundColor: '#212121',
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    infoSmall: {
+      fontSize: 16,
+      color: '#fff',
+      textAlign: 'center',
+      fontStyle: 'italic',
+      marginBottom: 15
     },
     locationButton: {
       width: 300,

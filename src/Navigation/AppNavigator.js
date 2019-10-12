@@ -12,23 +12,35 @@ import Search from '../components/screens/Search';
 import WishList from '../components/screens/WishList';
 import Profile from '../components/screens/Profile';
 import Tickets from '../components/screens/Tickets';
+import TicketsNavigation from '../Navigation/TicketsNavigation'
 import Signup from '../components/screens/Signup';
 import Login from '../components/screens/Login';
-import Loading from '../components/screens/Loading'
+import ProfileNavigation from '../Navigation/ProfileNavigation'
 import EventTypes from '../components/lists/EventTypes'
 import Places from '../components/lists/Places'
 import Dates from '../components/lists/Date'
 import Locations from '../components/lists/Locations'
-import CardInfo from '../components/Utils/CardInfo'
-import Booking from '../components/screens/Booking'
+import CardDetails from '../components/Utils/CardDetails'
+import Order from '../components/screens/Order'
+import AddCreditCard from '../components/Utils/AddCreditCard'
+
+  // Switchnavigator for bottom tab 'tickets'
+  const TicketsSwitchNavigator = createSwitchNavigator(
+  {
+      TicketsNavigation,
+      Tickets,
+      Signup,
+      Login
+  },{
+  });
 
   // Switchnavigator for bottom tab 'profile'
   const ProfileSwitchNavigator = createSwitchNavigator(
   {
-    Loading,
-    Signup,
-    Login,
-    Profile
+      ProfileNavigation,
+      Profile,
+      Signup,
+      Login, 
   },{
   });
 
@@ -41,8 +53,9 @@ import Booking from '../components/screens/Booking'
       }
     }, 
     Locations: { screen: Locations },
-    CardInfo: {screen: CardInfo},
-    Booking: {screen: Booking}
+    CardDetails: {screen: CardDetails},
+    Order: {screen: Order},
+    AddCreditCard: {screen: AddCreditCard}
   },{
     mode: 'modal'
   })
@@ -68,7 +81,7 @@ import Booking from '../components/screens/Booking'
   })
   
   // Bottom tab navigators (Home, Search, Wishlist, Tickets and Profile)
-  const AppTabNavigator = createMaterialBottomTabNavigator({
+  export const TabNavigator = createMaterialBottomTabNavigator({
     Home: { 
       screen: HomeStack,
       navigationOptions: {
@@ -120,5 +133,3 @@ import Booking from '../components/screens/Booking'
     //activeTintColor: '#FF007F'
     activeTintColor: 'white'
   })
-
-  export default AppTabNavigator;

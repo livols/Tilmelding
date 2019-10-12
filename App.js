@@ -1,5 +1,5 @@
 import React from 'react';
-import AppNavigator from './src/Navigation/AppNavigator';
+import {TabNavigator} from './src/Navigation/AppNavigator';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 
@@ -16,8 +16,14 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 
 export default class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = ({
+      loggedIn: false
+    })
+  }
 
   render() {
-    return <AppNavigator/>;
+    return <TabNavigator/>;
   }
 }

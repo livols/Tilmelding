@@ -83,7 +83,9 @@ export default class Profile extends Component {
     });
   }
 
-  logout = () => {
+  logout = async () => {
+    await AsyncStorage.clear();
+
     try {
       firebase.auth().signOut().then(() => {
         console.log('Signed Out');
@@ -91,7 +93,7 @@ export default class Profile extends Component {
     } catch (error) {
       console.error('Sign Out Error', error);
     }
-  }
+  };
 
   render() {
     return (

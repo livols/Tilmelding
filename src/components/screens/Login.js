@@ -103,11 +103,14 @@ export default class Login extends React.Component {
           <TouchableOpacity 
           style={styles.facebookButton}
           onPress={() => this.loginWithFacebook()}>
-            <View style={styles.facebookNestedButtonView}>
+            <View style={styles.nestedButtonView}>
               <Icon name='facebook' size={25} color='white'/>
               <Text style={styles.facebookButtonText}> Continue with Facebook</Text>
             </View>
           </TouchableOpacity>
+          <Text 
+          style={styles.signupText}
+          onPress={() => this.props.navigation.navigate('LoginMethods')}>Other login methods?</Text>
         </View>
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Don't have an account yet?</Text>
@@ -178,7 +181,7 @@ export default class Login extends React.Component {
       paddingVertical: 12,
       paddingHorizontal: 16
     },
-    facebookNestedButtonView: {
+    nestedButtonView: {
       alignItems: 'center',
       flexDirection: 'row'
     }, 
@@ -188,5 +191,24 @@ export default class Login extends React.Component {
       fontSize: 16,
       fontWeight: '500',
       flex: 1
+    },
+    googleButton: {
+      width: 300,
+      backgroundColor: '#ffff',
+      borderRadius: 25,
+      marginVertical: 10,
+      paddingVertical: 12,
+      paddingHorizontal: 16
+    },
+    googleButtonText: {
+      textAlign: 'center',
+      color: '#808080',
+      fontSize: 16,
+      fontWeight: '500',
+      flex: 1
+    },
+    googleImage: {
+      width: 25,
+      height: 25
     }
   });

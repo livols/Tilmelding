@@ -5,31 +5,47 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 export default class Order extends React.Component {
+    // Setting header title to 'Order'
     static navigationOptions = {
       title: 'Order',
     };
 
+    // Function to generate a random ticket number
+    uidGenerator = () => {
+      var S4 = function() {
+         return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+      };
+      return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    }
+
+    // Function when user presses button, to add a credit card
     onPressAddCreditCard = () => {
       this.props.navigation.navigate('AddCreditCardView');
     }
 
-    onPressPayment = () => {
-
+    // Function when user pays/books an event
+    onPressPayment = (item, noTickets, totalPrice) => {
+      this.addEventToFirestore(item, noTickets, totalPrice);
+      this.updateTickets(item, noTickets);
     }
 
+    // Function for adding the booked event to firestore
     addEventToFirestore = (item, noTickets, totalPrice) => {
       try {
-          var userUid = firebase.auth().currentUser.uid;
+          var userUid = firebase.auth().currentUser.uid; // Currently logged in user
           var db = firebase.firestore(); // Initialize firestore database
-         
+
+          // Getting the currently logged in user, and creating a new collection under that user called bookedEvents
+          // in colllection bookedEvents, some fields are set
           db.collection('users').doc(userUid).collection('bookedEvents').doc().set(
             {
-              eventId: item.id,
-              tickets: noTickets,
-              title: item.title,
-              date: item.date,
-              location: item.location,
-              totalPrice: totalPrice
+              eventId: item.id, // Event id
+              tickets: noTickets, // Number of tickets bought
+              ticketNumber: this.uidGenerator(),
+              title: item.title, // Title of the event
+              date: item.date, // Date of the event
+              location: item.location, // Location of the event
+              totalPrice: totalPrice // Total price, the user paid
           },
           {merge: true});
       } catch (error) {
@@ -37,7 +53,27 @@ export default class Order extends React.Component {
       }
     }
 
+    // Function to update the tickets in collection events
+    updateTickets = (item, noOfTickets) => {
+      try {
+        var db = firebase.firestore(); // Initialize firestore database
+
+        // Update field tickets in collection events, in firestore:
+        db.collection('events').doc(item.id).update(
+          {
+            // Subtract number of tickets bought, from number of tickets available.
+            // So that, number of tickets available is up to date, everytime a user buys tickets.
+            tickets: item.tickets - noOfTickets
+          }
+        )
+
+      } catch (error) {
+        console.log("Error getting documents: ", error);
+      }
+    }
+
     render(){
+      // Reading and storing the params 
       const item = this.props.navigation.getParam('propsItem');
       const totalPrice = this.props.navigation.getParam('total');
       const noTickets = this.props.navigation.getParam('noTickets');
@@ -86,7 +122,7 @@ export default class Order extends React.Component {
               <View style={styles.buttonContainer}>
                 <TouchableOpacity 
                 style={styles.button}
-                onPress={() => this.addEventToFirestore(item, noTickets, totalPrice)}>
+                onPress={() => this.onPressPayment(item, noTickets, totalPrice)}>
                   <Text style={styles.buttonText}>Payment</Text>
                 </TouchableOpacity>
               </View>

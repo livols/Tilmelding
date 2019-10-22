@@ -12,10 +12,8 @@ import Search from '../components/screens/Search';
 import WishList from '../components/screens/WishList';
 import Profile from '../components/screens/Profile';
 import Tickets from '../components/screens/Tickets';
-import TicketsNavigation from '../Navigation/TicketsNavigation'
 import Signup from '../components/screens/Signup';
 import Login from '../components/screens/Login';
-import ProfileNavigation from '../Navigation/ProfileNavigation'
 import EventTypes from '../components/lists/EventTypes'
 import Places from '../components/lists/Places'
 import Dates from '../components/lists/Date'
@@ -23,26 +21,22 @@ import Locations from '../components/lists/Locations'
 import CardDetails from '../components/Utils/CardDetails'
 import Order from '../components/screens/Order'
 import AddCreditCard from '../components/Utils/AddCreditCard'
+import Loader from '../components/Utils/Loader'
+import LoginMethods from '../components/screens/LoginMethods'
+import TicketDetails from '../components/screens/TicketDetails'
 
-  // Switchnavigator for bottom tab 'tickets'
-  const TicketsSwitchNavigator = createSwitchNavigator(
-  {
-      TicketsNavigation,
-      Tickets,
-      Signup,
-      Login
+  // Stacknavigator for bottom tab 'search'
+  const TicketsStack = createStackNavigator({
+    Tickets: {
+      screen: Tickets,
+      navigationOptions: {
+        header: null
+      }
+    }, 
+    TicketDetails: {screen: TicketDetails}
   },{
-  });
-
-  // Switchnavigator for bottom tab 'profile'
-  const ProfileSwitchNavigator = createSwitchNavigator(
-  {
-      ProfileNavigation,
-      Profile,
-      Signup,
-      Login, 
-  },{
-  });
+    mode: 'modal'
+  })
 
   // Stacknavigator for bottom tab 'home'
   const HomeStack = createStackNavigator({
@@ -52,7 +46,7 @@ import AddCreditCard from '../components/Utils/AddCreditCard'
         header: null
       }
     }, 
-    Locations: { screen: Locations },
+    Locations: {screen: Locations},
     CardDetails: {screen: CardDetails},
     Order: {screen: Order},
     AddCreditCard: {screen: AddCreditCard}
@@ -68,12 +62,7 @@ import AddCreditCard from '../components/Utils/AddCreditCard'
         header: null
       }
     }, 
-    EventTypes: {
-      screen: EventTypes,
-      navigationOptions: {
-        title: 'Back'
-      }
-    },
+    EventTypes: {screen: EventTypes},
     Places: {screen: Places},
     Date: {screen: Dates},
   },{
@@ -81,7 +70,7 @@ import AddCreditCard from '../components/Utils/AddCreditCard'
   })
   
   // Bottom tab navigators (Home, Search, Wishlist, Tickets and Profile)
-  export const TabNavigator = createMaterialBottomTabNavigator({
+  export const LoggedIn = createMaterialBottomTabNavigator({
     Home: { 
       screen: HomeStack,
       navigationOptions: {
@@ -110,7 +99,7 @@ import AddCreditCard from '../components/Utils/AddCreditCard'
       }
     },
     Tickets: { 
-      screen: Tickets,
+      screen: TicketsStack,
       navigationOptions:{
         tabBarLabel: 'Tickets',
         tabBarIcon: ({tintColor}) => (
@@ -119,7 +108,7 @@ import AddCreditCard from '../components/Utils/AddCreditCard'
       }
     },
     Profile: { 
-      screen: ProfileSwitchNavigator,
+      screen: Profile,
       navigationOptions:{
         tabBarLabel: 'Profile',
         tabBarIcon: ({tintColor}) => (
@@ -129,7 +118,16 @@ import AddCreditCard from '../components/Utils/AddCreditCard'
     },
   },{
     initialRouteName: 'Home',
-    //order: ['Settings', 'Home'],
-    //activeTintColor: '#FF007F'
     activeTintColor: 'white'
   })
+
+  // Switchnavigator when user is logged out
+  export const LoggedOut = createSwitchNavigator(
+    {
+        Loader,
+        Signup,
+        Login,
+        LoginMethods
+    },{
+      initialRouteName: 'Loader'
+    });

@@ -8,6 +8,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
+const API_KEY = 'AIzaSyBBz8RQGQxPWmXAyBAonULNZB5le6A8Y1A';
 
 export default class CardInfo extends React.Component {
     static navigationOptions = {
@@ -55,6 +56,8 @@ export default class CardInfo extends React.Component {
     render(){
       // Reading params from screen Home, storing in variable item
       const item = this.props.navigation.getParam('propsItem');
+      const latitude = item.location.latitude;
+      const longitude = item.location.longitude;
       return (
         <View style={styles.container}>
           {/* Using scrollview so that user is able to scroll down and up on the screen*/}
@@ -110,13 +113,9 @@ export default class CardInfo extends React.Component {
               {/* Secion Location, where location is displayed on a map*/}
               <Text style={styles.titleText}>Location</Text>
               <Text style={styles.details}>
-                Address,
+                Ísaksgøta 8, 
                 {"\n"}
-                Postcode City,
-                {"\n"}
-                ......
-                {"\n"}
-                Google maps here.
+                188 Hoyvík
               </Text>
               {/* Seperate info on card */}
               <View style={styles.separator}/>

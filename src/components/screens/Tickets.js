@@ -1,14 +1,15 @@
   // Tickets.js: is the screen the logged in user is able to see a list with all the events he has booked.
   import React from 'react';
-  import { Text, StyleSheet, View, ActivityIndicator, FlatList, TouchableOpacity, Image} from 'react-native';
+  import { Text, StyleSheet, View, ActivityIndicator, FlatList, TouchableOpacity} from 'react-native';
   import * as firebase from 'firebase';
   import 'firebase/firestore';
+  import QRCode from 'react-qr-code';
   
   export default class Tickets extends React.Component {
     constructor(){
       super();
       this.state = {
-        bookedEvents: [],
+        bookedEvents: []
       }
     }
   
@@ -35,13 +36,15 @@
     };
 
     _onPress = (item) => {
-      
+      this.props.navigation.navigate('TicketDetails', {
+        propsItem: item
+      });
     }
   
     // Function for flatlist to render all booked events on the screen
     _renderItem = (item) => {
       return(
-        <TouchableOpacity 
+        <TouchableOpacity
         style={styles.card}
         onPress={() => this._onPress(item)}>
           <View style={styles.textContainer}>
@@ -59,6 +62,9 @@
               <Text style={styles.descriptionText}>Number of tickets: {item.tickets}</Text>
               <Text style={styles.descriptionText}>Paid: {item.totalPrice} kr.</Text>
           </View>
+          <QRCode 
+          value={item.ticketNumber}
+          size={120} />
         </TouchableOpacity>
       );
     }
@@ -142,9 +148,15 @@
         borderColor: '#fff',
         borderWidth: 10
         },
+        QRimage: {
+          width: 125,
+          height: 125,
+          resizeMode: 'cover'
+        },
         textContainer: {
           flexDirection: 'column',
           marginBottom: 5,
+          width: '60%'
         },
         titleText: {
           fontSize: 19,

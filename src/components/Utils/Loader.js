@@ -1,14 +1,15 @@
+// Loader.js: this screen checks if user is logged in or out. If the user is logged in he will be able to see and use the app.
+// While user who is logged out, has to signup or login.
 import React from "react";
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import * as firebase from 'firebase';
 
-export default class TicketsNavigation extends React.Component {
+export default class Loader extends React.Component {
   componentDidMount() {
-    // Navigate user to either tickets or signup, depending on if user is logged in.
     firebase.auth().onAuthStateChanged(user => {
-      this.props.navigation.navigate(user ? 'Tickets' : 'Signup')
+      this.props.navigation.navigate(user ? 'Home' : 'Login')
     })
-}
+  }
 
   render() {
     return (

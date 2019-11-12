@@ -36,15 +36,6 @@ export default class Login extends React.Component {
     }
   }
 
-  // Firebase login with credential from the Facebook user.
-  FBfirebaseLogin = (token) => {
-    // Using token to get access to use Facebook HTTP API requests
-    const credential = firebase.auth.FacebookAuthProvider.credential(token);
-    firebase.auth().signInWithCredential(credential).catch((error) => {
-      console.log("Error login with facebook user credential: ", error)
-    });
-  };
-
   // Function login with facebook
   async loginWithFacebook() {
     try {
@@ -60,6 +51,15 @@ export default class Login extends React.Component {
     } catch (error) {
       console.log('Facebook login error: ', error);
     }
+  };
+
+  // Firebase login with credential from the Facebook user.
+  FBfirebaseLogin = (token) => {
+    // Using token to get access to use Facebook HTTP API requests
+    const credential = firebase.auth.FacebookAuthProvider.credential(token);
+    firebase.auth().signInWithCredential(credential).catch((error) => {
+      console.log("Error login with facebook user credential: ", error)
+    });
   };
 
   render(){

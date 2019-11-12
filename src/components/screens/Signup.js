@@ -16,7 +16,7 @@ export default class Signup extends React.Component {
   }
 
   // Function for user signup
-  signUpUser = () => {
+  signupUser = () => {
     const { name, email, password } = this.state;
     try {
       // Authenticate user with firebase, using email and password to create a new user
@@ -99,7 +99,7 @@ export default class Signup extends React.Component {
           {/* Button for Signup */}
           <TouchableOpacity 
           style={styles.formButton}
-          onPress={() => this.signUpUser()}>
+          onPress={() => this.signupUser()}>
               <Text style={styles.formButtonText}>Signup</Text>
           </TouchableOpacity>
       </View>

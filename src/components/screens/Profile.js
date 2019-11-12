@@ -1,12 +1,12 @@
 // Profile.js: is the screen, user information will be displayed.
 // User also able to edit his own user information.
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import {AsyncStorage} from 'react-native';
 
-export default class Profile extends Component {
+export default class Profile extends React.Component {
   // Function getUser() uses setState() in a asynchronous request to an API, 
   // and the request should be resolved before the component is unmounted. To avoid slowing down the application.
   // Therefore variable _isMounted is used, to check if component is mounted by using a boolean.
@@ -69,7 +69,7 @@ export default class Profile extends Component {
       });
   }
 
-  // Function to get bot facebook and email/password data, 
+  // Function to get both facebook and email/password data, 
   // depending on the currently logged in user
   getUser = () => {
     // Using onAuthStateChanged(), to get the currently logged in user
@@ -83,6 +83,7 @@ export default class Profile extends Component {
     });
   }
 
+  // Function for user to logout of the profile
   logout = async () => {
     await AsyncStorage.clear();
 

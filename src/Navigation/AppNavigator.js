@@ -40,7 +40,7 @@ import TicketDetails from '../components/screens/TicketDetails'
 
   // Stacknavigator for bottom tab 'home'
   const HomeStack = createStackNavigator({
-    Search: {
+    Home: {
       screen: Home,
       navigationOptions: {
         header: null

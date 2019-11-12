@@ -8,7 +8,6 @@ import { Dropdown } from 'react-native-material-dropdown';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
-const API_KEY = 'AIzaSyBBz8RQGQxPWmXAyBAonULNZB5le6A8Y1A';
 
 export default class CardInfo extends React.Component {
     static navigationOptions = {
@@ -33,6 +32,16 @@ export default class CardInfo extends React.Component {
         this.state.mounted = true;
       }
       this.removeItem();
+    }
+
+    getLocation = () => {
+      Geocoder.from(41.89, 12.49)
+        .then(json => {
+        		var addressComponent = json.results[0].address_components[0];
+            console.log(addressComponent);
+            alert(addressComponent);
+        })
+        .catch(error => console.warn(error));
     }
 
     // Function to remove items from array dropDownTickets, so that it matches with available tickets

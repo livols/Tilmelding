@@ -5,13 +5,19 @@ import { Text, StyleSheet, View, ActivityIndicator, FlatList, TouchableOpacity, 
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
+import * as Animatable from 'react-native-animatable' 
+import IconA from 'react-native-vector-icons/AntDesign'
+
+const AnimatedIcon = Animatable.createAnimatableComponent(IconA)
 
 export default class Home extends React.Component {
   constructor(){
     super();
     this.state = {
       events: [],
+      liked: false
     }
+    this.lastPress = 0
   }
 
   componentDidMount(){
@@ -36,11 +42,14 @@ export default class Home extends React.Component {
 
   // Function for flatlist to render the events on the screen
   _renderItem = (item) => {
+    const { liked } = this.state;
     return(
       <TouchableOpacity 
-      style={styles.card}
-      onPress={() => this._onPress(item)}>
-        <Image style={styles.cardImage} source={{uri: item.image }}/>
+      style={styles.card}>
+        <Image 
+        style={styles.cardImage} 
+        source={{uri: item.image }}
+        onPress={() => this._onPress(item)}/>
         <View style={styles.textContainer}>
             <Text style={styles.titleText}>{item.title}</Text>
             <Text 
@@ -48,6 +57,13 @@ export default class Home extends React.Component {
             numberOfLines={5}>{item.description}</Text>
             <Text style={styles.dateText}>{new Date(item.date.toDate()).toDateString()}</Text>
         </View>
+        <AnimatedIcon
+          ref={this.handleSmallAnimatedIconRef}
+          name={liked ? 'heart' : 'hearto'}
+          color={liked ? colors.heartColor : colors.textPrimary}
+          size={18}
+          style={styles.icon}
+        />
       </TouchableOpacity>
     );
   }
@@ -58,6 +74,58 @@ export default class Home extends React.Component {
       propsItem: item
     });
   }
+
+  handleSmallAnimatedIconRef = (ref) => {
+    this.smallAnimatedIcon = ref
+  }
+
+  // Function that handles the animation of both small and bigger heart
+  animateIcon = () => {
+    const { liked } = this.state
+    // Firstly, we stop any occuring animation
+    this.largeAnimatedIcon.stopAnimation()
+
+    if (liked) {
+      // If the Photo is already liked, there's a different animation for a small heart icon, it's a little subtle animation
+      this.largeAnimatedIcon.bounceIn()
+        .then(() => this.largeAnimatedIcon.bounceOut())
+      this.smallAnimatedIcon.pulse(200)
+    } else {
+      /* The Animation chain for the main animation when liking the photo occurs by double tapping
+      Each animation is returning a promise, that's why we can chain them in a smooth sequence of animations */
+      this.largeAnimatedIcon.bounceIn()
+        .then(() => {
+          this.largeAnimatedIcon.bounceOut()
+          this.smallAnimatedIcon.bounceIn()
+        })
+        .then(() => {
+          if (!liked) {
+            this.setState(prevState => ({ liked: !prevState.liked }))
+          }
+        })
+    }
+  }
+
+  handleOnPress = () => {
+    const time = new Date().getTime()
+    // This delta determines time passed since last press on the photo
+    const delta = time - this.lastPress
+    const doublePressDelay = 400
+  
+    if (delta < doublePressDelay) {
+      // If the delta is less than specified doublePressDelay value, it fires the function for animations
+      this.animateIcon()
+    }
+    this.lastPress = time
+  }
+
+  handleOnPressLike = () => {
+    /* This is a separate function for liking the photo, 
+    it activates only smart heart animation and it's invoked by pressing small icon */
+    this.smallAnimatedIcon.bounceIn()
+    this.setState(prevState => ({ liked: !prevState.liked }))
+  }
+
 
   render(){
     // Using ActivityIndicator, to show user its loading, and if the array with events is empty
@@ -94,6 +162,14 @@ export default class Home extends React.Component {
     );
   }
 }
+
+  const colors = {
+    transparent: 'transparent',
+    white: '#fff',
+    heartColor: '#e92f3c',
+    textPrimary: '#515151',
+    black: '#000', 
+  }
 
   const styles = StyleSheet.create({
     mainContainer: {

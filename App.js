@@ -29,7 +29,15 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
-    // Checking if a user is logged in or out
+    this.isUserLoggedIn();
+  }
+
+  componentWillUnmount(){
+    this._isMounted= false;
+  }
+
+  // Function to check if a user is logged in or out
+  isUserLoggedIn = () => {
     firebase.auth().onAuthStateChanged(user => {
       if(this._isMounted = true){
         if (user) {
@@ -40,10 +48,6 @@ export default class App extends React.Component {
         }
       }
     })
-  }
-
-  componentWillUnmount(){
-    this._isMounted= false;
   }
 
   render() {

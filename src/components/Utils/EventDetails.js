@@ -1,5 +1,6 @@
-// EventDetails.js: is the screen that displays details about soem specific an event the user has chosen to see more about. 
-// This is also the screen were the user is able to choose number of tickets of an event to book.
+/* EventDetails.js: is the screen that displays details about some specific event the user has chosen to see more about,
+and like button, the user can press on to add the event to his wishlist. 
+User is also able to book event and choose how many tickets he wants.*/ 
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
 import * as Animatable from 'react-native-animatable'; 
@@ -8,7 +9,7 @@ import { Dropdown } from 'react-native-material-dropdown';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
 
-const AnimatedIcon = Animatable.createAnimatableComponent(Icon)
+const AnimatedIcon = Animatable.createAnimatableComponent(Icon);
 
 export default class EventDetails extends React.Component {
     static navigationOptions = {
@@ -23,6 +24,7 @@ export default class EventDetails extends React.Component {
           liked: false
         }
         this.lastPress = 0;
+        this.eventExistOnWishlistInFirestore();
       }
 
       componentDidMount(){
@@ -56,21 +58,20 @@ export default class EventDetails extends React.Component {
       }
     
       handleLargeAnimatedIconRef = (ref) => {
-        this.largeAnimatedIcon = ref
+        this.largeAnimatedIcon = ref;
       }
     
       handleSmallAnimatedIconRef = (ref) => {
-        this.smallAnimatedIcon = ref
+        this.smallAnimatedIcon = ref;
       }
     
       // Function that handles the animation of both small and bigger heart
       animateIcon = () => {
-        const { liked } = this.state
         // Firstly, we stop any occuring animation
         this.largeAnimatedIcon.stopAnimation();
         
         // If the Photo is already liked, there's a different animation for a small heart icon, it's a little subtle animation
-        if (liked) {
+        if (this.state.liked) {
           this.largeAnimatedIcon.bounceIn()
             .then(() => this.largeAnimatedIcon.bounceOut());
           this.smallAnimatedIcon.pulse(200);
@@ -79,13 +80,8 @@ export default class EventDetails extends React.Component {
           // Each animation is returning a promise, that's why we can chain them in a smooth sequence of animations
           this.largeAnimatedIcon.bounceIn()
             .then(() => {
-              this.largeAnimatedIcon.bounceOut()
-              this.smallAnimatedIcon.bounceIn()
-            })
-            .then(() => {
-              if (!liked) {
-                this.setState(prevState => ({ liked: !prevState.liked }))
-              }
+              this.largeAnimatedIcon.bounceOut();
+              this.smallAnimatedIcon.bounceIn();
             })
         }
       }
@@ -100,19 +96,41 @@ export default class EventDetails extends React.Component {
         // If the delta is less than specified doublePressDelay value, it fires the function for animations
         if (delta < doublePressDelay) {
           this.animateIcon();
+
+          // If like button is pressed (red heart)
+          if(this.state.liked){
+            // Delete from collection wishlist in firestore
+            this.removeFromWishlistInFirestore();
+            this.setState({liked: false});
+          } else { // If like button is not pressed (white heart)
+            // Add event to collection wishlist in firestore
+            this.addEventToWishlistFirestore();
+            this.setState({liked: true});
+          }
         }
-        this.lastPress = time
+        this.lastPress = time;
       }
       
       // Function for handling press on the small icon heart (below image)
       // Activates smart heart animation
       handleOnPressLike = () => {
         this.smallAnimatedIcon.bounceIn();
-        this.setState(prevState => ({ liked: !prevState.liked }));
+
+        // If like button is pressed (red heart)
+        if(this.state.liked){
+          // Delete from collection wishlist in firestore
+          this.removeFromWishlistInFirestore();
+          this.setState({liked: false});
+        } else { // If like button is not pressed (white heart)
+          // Add event to collection wishlist in firestore
+          this.addEventToWishlistFirestore();
+          this.setState({liked: true});
+        }
       }
 
       // Function for adding the liked event to wishlist on firestore
-      addEventToWishlistFirestore = (item) => {
+      addEventToWishlistFirestore = () => {
+        const item = this.props.navigation.getParam('propsItem');
         try {
             var userUid = firebase.auth().currentUser.uid; // Currently logged in user
             var db = firebase.firestore(); // Initialize firestore database
@@ -133,12 +151,13 @@ export default class EventDetails extends React.Component {
             },
             {merge: true});
         } catch (error) {
-          console.log("Error getting documents: ", error);
+          console.log("Error storing documents: ", error);
         }
       }
 
       // Function to check if the event is stored in collection wishlist, under currently logged in user
-      eventExistOnWishlistInFirestore = (item) => {
+      eventExistOnWishlistInFirestore = () => {
+        const item = this.props.navigation.getParam('propsItem');
         try {
           var userUid = firebase.auth().currentUser.uid; // Currently logged in user
           var db = firebase.firestore(); // Initialize firestore database
@@ -150,25 +169,29 @@ export default class EventDetails extends React.Component {
               // Check if the document on wishlist exist
               if (docSnapshot.exists) {
                 // Make small heart icon red (like button), so that the user see's that he has already liked the event
-                this.handleOnPressLike();
-              }
+                this.setState({liked: true});
+              } 
             })
         } catch (error) {
-          console.log("Error getting documents: ", error);
+          console.log("Error finding document: ", error);
+        }
+      }
+
+      removeFromWishlistInFirestore = () => {
+        const item = this.props.navigation.getParam('propsItem');
+        try {
+          var userUid = firebase.auth().currentUser.uid; // Currently logged in user
+          var db = firebase.firestore(); // Initialize firestore database
+          
+          db.collection('users').doc(userUid).collection('wishlist').doc(item.id).delete();
+        } catch (error) {
+          console.log("Error deleting document: ", error);
         }
       }
 
       render() {
         const {liked} = this.state;
         const item = this.props.navigation.getParam('propsItem');
-        // Checking if user liked the event
-        if(liked){
-          // If user liked the event, add to collection wishlist on firestore
-          this.addEventToWishlistFirestore(item);
-        } else {
-          // Make small heart icon red (like button), if user already has liked the event
-          this.eventExistOnWishlistInFirestore(item);
-        }
         return (
           <View style={styles.container}>
             {/* Using scrollview so that user is able to scroll down and up on the screen*/}
@@ -271,6 +294,8 @@ export default class EventDetails extends React.Component {
                     containerStyle = {styles.dropdown}
                     onChangeText={(value)=> {this.setState({value});}}
                     />
+                    </View>
+                    <View style={styles.buttonContainer}>
                     <TouchableOpacity 
                     style={styles.button}
                     disabled={!this.state.value}
@@ -382,7 +407,7 @@ export default class EventDetails extends React.Component {
       marginTop: 15
     },
     dropdown: {
-      width: '55%'
+      width: '94%'
     },
     totalPriceNestedTextView: {
       flexDirection: 'row',
@@ -409,7 +434,7 @@ export default class EventDetails extends React.Component {
       flexDirection: 'row'
     },
     button: {
-      width: '40%',
+      width: '97%',
       backgroundColor: '#C51162',
       borderRadius: 15,
       marginVertical: 10,

@@ -5,6 +5,9 @@ const ITEM_WIDTH = Dimensions.get('window').width;
 const COLUMNS = 2;
 
 export default class Locations extends React.Component {
+  static navigationOptions = {
+    title: 'Location',
+  };
   constructor(props) {
     super(props);
     this.state = {

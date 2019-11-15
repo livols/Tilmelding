@@ -4,6 +4,7 @@
   import * as firebase from 'firebase';
   import 'firebase/firestore';
   import QRCode from 'react-qr-code';
+  import Icon from 'react-native-vector-icons/FontAwesome';
   
   export default class Tickets extends React.Component {
     constructor(){
@@ -73,7 +74,7 @@
       // If the array with booked events is empty
       if (this.state.bookedEvents.length === 0) {
         return(
-            <View style={styles.secondContainer}>
+            <View style={styles.searchContainer}>
               <Text style={styles.infoSmall}>
                 Are you sure you have any booked events?
                 {"\n"}
@@ -86,7 +87,8 @@
       return (
         <View style={styles.mainContainer}>
           <View style={styles.secondContainer}>
-            <Text style={styles.info}>Upcoming events</Text>
+            <Icon name='ticket' size={30} color='#C51162'/>
+            <Text style={styles.info}> Upcoming events</Text>
           </View>
           {/* Using flatlist to display all the events, stored in the array bookedEvents */}
           <View style={styles.flatListContainer}>
@@ -105,11 +107,18 @@
       mainContainer: {
         flex: 1,
       },
-      secondContainer: {
+      searchContainer: {
         flex: 1.5,
         backgroundColor: '#212121',
         alignItems: 'center',
         justifyContent: 'center'
+      },
+      secondContainer: {
+        flex: 1.5,
+        backgroundColor: '#212121',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
       },
       flatListContainer: {
         flex: 6,

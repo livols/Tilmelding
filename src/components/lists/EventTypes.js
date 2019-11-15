@@ -3,6 +3,9 @@ import { StyleSheet, FlatList, Text, View, Alert, TouchableHighlight, TouchableO
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class EventTypes extends React.Component {
+  static navigationOptions = {
+    title: 'Event type',
+  };
   constructor(props) {
     super(props);
     this.state = {

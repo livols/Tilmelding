@@ -1,24 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import IconF from 'react-native-vector-icons/FontAwesome';
-import { Input, Button } from 'react-native-elements';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Input } from 'react-native-elements';
 
 export default class Search extends React.Component {
     render(){
       return (
         <View style={styles.container}>
-          <LinearGradient
-          colors={['#C51162', 'transparent']}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            height: 500,
-          }}
-        />
           <View style={styles.searchFieldContainer}>
             <Input
             placeholder=' Search for event...'
@@ -44,8 +32,8 @@ export default class Search extends React.Component {
             <View style={{marginVertical:15}}></View>
             <Text style={styles.text}>In</Text>
             <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Places')}>
-                <Text style={styles.searchButtonText}>Place</Text>
+            onPress={() => this.props.navigation.navigate('Locations')}>
+                <Text style={styles.searchButtonText}>Location</Text>
             </TouchableOpacity>
             <View style={{marginVertical:15}}></View>
             <Text style={styles.text}>On</Text>
@@ -55,7 +43,7 @@ export default class Search extends React.Component {
             </TouchableOpacity>
             <View style={{marginVertical:30, alignItems: 'center'}}>
               <TouchableOpacity style={styles.button}>
-                  <Text style={styles.buttonText}>Let's find the event</Text>
+                  <Text style={styles.buttonText}>Find event</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -71,12 +59,14 @@ export default class Search extends React.Component {
       backgroundColor: '#212121'
     },
     searchFieldContainer:{
-      flex: 1,
-      justifyContent: 'flex-start'
+      flex: 0.7,
+      justifyContent: 'flex-start',
+      backgroundColor: '#FF4081'
     },
     inputFieldContainer: {
       flex: 1,
-      justifyContent: 'flex-start'
+      justifyContent: 'flex-start',
+      marginTop: 30
     },
     inputBoxSearch: {
       marginVertical: 100,
@@ -100,7 +90,7 @@ export default class Search extends React.Component {
       paddingHorizontal: 16
     },
     button: {
-      width: 200,
+      width: 250,
       backgroundColor: '#C51162',
       borderRadius: 40,
       marginVertical: 10,

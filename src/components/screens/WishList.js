@@ -3,6 +3,7 @@
   import { Text, StyleSheet, View, ActivityIndicator, FlatList, TouchableOpacity, Image} from 'react-native';
   import * as firebase from 'firebase';
   import 'firebase/firestore';
+  import Icon from 'react-native-vector-icons/AntDesign';
   
   export default class Wishlist extends React.Component {
     constructor(){
@@ -64,9 +65,9 @@
       // If the array wishlist is empty
       if (this.state.wishlist.length === 0) {
         return(
-            <View style={styles.secondContainer}>
+            <View style={styles.searchContainer}>
               <Text style={styles.infoSmall}>
-                Retrieving your wishlist, wait a moment.
+                Retrieving your wishlist, wait a moment...
               </Text>
               <ActivityIndicator size="large" color='#C51162'/>
             </View>
@@ -75,7 +76,8 @@
       return (
         <View style={styles.mainContainer}>
           <View style={styles.secondContainer}>
-            <Text style={styles.info}>Wishlist</Text>
+            <Icon name='heart' size={22} color='#e92f3c'/>
+            <Text style={styles.info}> Wishlist</Text>
           </View>
           {/* Using flatlist to display all the events, stored in the array wishlist */}
           <View style={styles.flatListContainer}>
@@ -94,11 +96,18 @@
     mainContainer: {
       flex: 1
     },
+    searchContainer: {
+      flex: 1.5,
+      backgroundColor: '#212121',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     secondContainer: {
       flex: 1.5,
       backgroundColor: '#212121',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      flexDirection: 'row'
     },
     flatListContainer: {
       flex: 6,

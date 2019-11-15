@@ -7,7 +7,7 @@ import 'firebase/firestore';
 export default class Order extends React.Component {
     // Setting header title to 'Order'
     static navigationOptions = {
-      title: 'Order',
+      title: 'Order details',
     };
 
     // Function to generate a random ticket number
@@ -123,7 +123,7 @@ export default class Order extends React.Component {
                 <TouchableOpacity 
                 style={styles.button}
                 onPress={() => this.onPressPayment(item, noTickets, totalPrice)}>
-                  <Text style={styles.buttonText}>Payment</Text>
+                  <Text style={styles.buttonText}>PAY NOW</Text>
                 </TouchableOpacity>
               </View>
           </ScrollView>

@@ -18,7 +18,7 @@ import EventTypes from '../components/lists/EventTypes'
 import Places from '../components/lists/Places'
 import Dates from '../components/lists/Date'
 import Locations from '../components/lists/Locations'
-import CardDetails from '../components/Utils/CardDetails'
+import EventDetails from '../components/Utils/EventDetails'
 import Order from '../components/screens/Order'
 import AddCreditCard from '../components/Utils/AddCreditCard'
 import Loader from '../components/Utils/Loader'
@@ -47,7 +47,7 @@ import TicketDetails from '../components/screens/TicketDetails'
       }
     }, 
     Locations: {screen: Locations},
-    CardDetails: {screen: CardDetails},
+    EventDetails: {screen: EventDetails},
     Order: {screen: Order},
     AddCreditCard: {screen: AddCreditCard}
   },{

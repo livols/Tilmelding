@@ -50,9 +50,9 @@
           <View style={styles.textContainer}>
               <Text style={styles.titleText}>{item.title}</Text>
               <Text style={styles.descriptionText}>
-                Isaksgøta 8,
-                {"\n"}
-                188 Hoyvík
+                  Latitude: {item.location.latitude}
+                  {"\n"}
+                  Longitude: {item.location.longitude}
                 </Text>
               <Text style={styles.dateText}>
               {new Date(item.date.toDate()).toDateString()}

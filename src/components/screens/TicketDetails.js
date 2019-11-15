@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export default class TicketDetails extends React.Component {
     // Setting header title to 'Ticket Details'
     static navigationOptions = {
-      title: 'Ticket Details',
+      title: 'Ticket details',
     };
 
     render(){
@@ -51,9 +51,9 @@ export default class TicketDetails extends React.Component {
               <View style={{ flexDirection: 'row'}}>
                 <Icon name="location-on" size={25} color='#808080' />
                 <Text style={styles.details}>
-                  Isaksgøta 8,
+                  Latitude: {item.location.latitude}
                   {"\n"}
-                  188 Hoyvík
+                  Longitude: {item.location.longitude}
                 </Text>
               </View>
             </Card>

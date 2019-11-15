@@ -101,14 +101,6 @@ export default class Home extends React.Component {
   }
 }
 
-  const colors = {
-    transparent: 'transparent',
-    white: '#fff',
-    heartColor: '#e92f3c',
-    textPrimary: '#515151',
-    black: '#000', 
-  }
-
   const styles = StyleSheet.create({
     mainContainer: {
       flex: 1

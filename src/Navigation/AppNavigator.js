@@ -26,6 +26,19 @@ import LoginMethods from '../components/screens/LoginMethods'
 import TicketDetails from '../components/screens/TicketDetails'
 
   // Stacknavigator for bottom tab 'search'
+  const WishlistStack = createStackNavigator({
+    WishList: {
+      screen: WishList,
+      navigationOptions: {
+        header: null
+      }
+    }, 
+    EventDetails: {screen: EventDetails},
+  },{
+    mode: 'modal'
+  })
+
+  // Stacknavigator for bottom tab 'tickets'
   const TicketsStack = createStackNavigator({
     Tickets: {
       screen: Tickets,
@@ -90,7 +103,7 @@ import TicketDetails from '../components/screens/TicketDetails'
       }
     },
     WishList: { 
-      screen: WishList,
+      screen: WishlistStack,
       navigationOptions:{
         tabBarLabel: 'Wishlist',
         tabBarIcon: ({tintColor}) => (

@@ -121,10 +121,15 @@ export default class EventDetails extends React.Component {
             // in colllection wishlist, some fields are set
             db.collection('users').doc(userUid).collection('wishlist').doc(item.id).set(
               {
-                eventId: item.id, // Event id
+                id: item.id, // Event id
                 title: item.title, // Event title
                 description: item.description, // Event description
-                date: item.date // Event date
+                date: item.date, // Event date
+                image: item.image, // Event image
+                location: item.location, // Event location
+                organizer: item.organizer, // Event organizer
+                price: item.price, // Event price
+                tickets: item.tickets // Event tickets
             },
             {merge: true});
         } catch (error) {

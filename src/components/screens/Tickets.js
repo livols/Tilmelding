@@ -88,7 +88,7 @@
           <View style={styles.secondContainer}>
             <Text style={styles.info}>Upcoming events</Text>
           </View>
-          {/* Using flatlist to display all the events, stored in the array with the events */}
+          {/* Using flatlist to display all the events, stored in the array bookedEvents */}
           <View style={styles.flatListContainer}>
             <FlatList
             data={this.state.bookedEvents}
@@ -106,7 +106,7 @@
         flex: 1,
       },
       secondContainer: {
-        flex: 2,
+        flex: 1.5,
         backgroundColor: '#212121',
         alignItems: 'center',
         justifyContent: 'center'
@@ -129,6 +129,7 @@
         marginBottom: 15
       },
       card: {
+        marginTop: 15,
         backgroundColor: '#fff',
         flex: 1,
         flexDirection: 'row',

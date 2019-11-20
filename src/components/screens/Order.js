@@ -18,11 +18,6 @@ export default class Order extends React.Component {
       return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
     }
 
-    // Function when user presses button, to add a credit card
-    onPressAddCreditCard = () => {
-      this.props.navigation.navigate('AddCreditCardView');
-    }
-
     // Function when user pays/books an event
     onPressPayment = (item, noTickets, totalPrice) => {
       this.addEventToFirestore(item, noTickets, totalPrice);
@@ -110,14 +105,6 @@ export default class Order extends React.Component {
               </View>
               <View style={styles.separator}/>
               </Card>
-              {/* Button for adding a credit card */}
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity 
-                style={styles.button}
-                onPress={() => this.props.navigation.navigate('AddCreditCard')}>
-                  <Text style={styles.buttonText}>Add credit card</Text>
-                </TouchableOpacity>
-              </View>
               {/* Button for paying for event */}
               <View style={styles.buttonContainer}>
                 <TouchableOpacity 

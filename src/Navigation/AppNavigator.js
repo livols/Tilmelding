@@ -23,8 +23,23 @@ import AddCreditCard from '../components/Utils/AddCreditCard';
 import Loader from '../components/Utils/Loader';
 import LoginMethods from '../components/screens/LoginMethods';
 import TicketDetails from '../components/screens/TicketDetails';
+import Edit from '../components/screens/Edit';
 
-  // Stacknavigator for bottom tab 'search'
+  // Stacknavigator for bottom tab 'profile'
+  const ProfileStack = createStackNavigator({
+    Profile: {
+      screen: Profile,
+      navigationOptions: {
+        header: null
+      }
+    }, 
+    Edit: {screen: Edit},
+    AddCreditCard: {screen: AddCreditCard},
+  },{
+    mode: 'modal'
+  })
+
+  // Stacknavigator for bottom tab 'wishlist'
   const WishlistStack = createStackNavigator({
     WishList: {
       screen: WishList,
@@ -60,8 +75,7 @@ import TicketDetails from '../components/screens/TicketDetails';
     }, 
     Locations: {screen: Locations},
     EventDetails: {screen: EventDetails},
-    Order: {screen: Order},
-    AddCreditCard: {screen: AddCreditCard}
+    Order: {screen: Order}
   },{
     mode: 'modal'
   })
@@ -120,7 +134,7 @@ import TicketDetails from '../components/screens/TicketDetails';
       }
     },
     Profile: { 
-      screen: Profile,
+      screen: ProfileStack,
       navigationOptions:{
         tabBarLabel: 'Profile',
         tabBarIcon: ({tintColor}) => (

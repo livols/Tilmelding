@@ -177,6 +177,8 @@ export default class EventDetails extends React.Component {
         }
       }
 
+      // Function for removing the event from collection wishlist on firestore,
+      // this is when user presses heart and heart becomes white, then he 'unlikes' the event
       removeFromWishlistInFirestore = () => {
         const item = this.props.navigation.getParam('propsItem');
         try {

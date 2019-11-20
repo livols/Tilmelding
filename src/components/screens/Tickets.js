@@ -138,7 +138,6 @@
         marginBottom: 15
       },
       card: {
-        marginTop: 15,
         backgroundColor: '#fff',
         flex: 1,
         flexDirection: 'row',

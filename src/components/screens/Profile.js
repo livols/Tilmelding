@@ -114,7 +114,9 @@ export default class Profile extends React.Component {
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/home/win8/50/ffffff'}}/>
               </View>
               <View style={styles.infoContent}>
-                <Text style={styles.info}>Edit Info</Text>
+                <Text 
+                style={styles.info}
+                onPress={() => this.props.navigation.navigate('Edit')}>Edit Info</Text>
               </View>
             </View>
 
@@ -123,7 +125,9 @@ export default class Profile extends React.Component {
                 <Image style={styles.icon} source={{uri: 'https://png.icons8.com/settings/win8/50/ffffff'}}/>
               </View>
               <View style={styles.infoContent}>
-                <Text style={styles.info}>Add credit card</Text>
+                <Text 
+                style={styles.info}
+                onPress={() => this.props.navigation.navigate('AddCreditCard')}>Add credit card</Text>
               </View>
             </View>
 

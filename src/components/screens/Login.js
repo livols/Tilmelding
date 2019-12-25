@@ -39,6 +39,8 @@ export default class Login extends React.Component {
   // Function login with facebook
   async loginWithFacebook() {
     try {
+      // Initializing Facebook SDK manually before using logInWithReadPermissionsAsync(appID, options).
+      await Facebook.initializeAsync('709225182876997');
       // logInWithReadPermissionAsync(appID, options), grants the app permission to access Facebook data.
       const { type, token } = await Facebook.logInWithReadPermissionsAsync('709225182876997', {
         permissions: ['public_profile', 'email'],
@@ -50,6 +52,7 @@ export default class Login extends React.Component {
       }
     } catch (error) {
       console.log('Facebook login error: ', error);
+      alert(error);
     }
   };
 

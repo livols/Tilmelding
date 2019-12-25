@@ -8,7 +8,7 @@ export default class Dates extends React.Component {
     render(){
       return (
         <View style={styles.container}>
-          <Text>This is Dates</Text>
+          <Text>A calendar with dates, should be shown on this screen!</Text>
         </View>
       );
     }

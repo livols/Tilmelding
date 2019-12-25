@@ -5,7 +5,14 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest --watchAll"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+  "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
+  ]
   },
   "dependencies": {
     "@react-native-firebase/firestore": "^6.0.0",
@@ -33,8 +40,12 @@
     "react-qr-code": "^0.1.3"
   },
   "devDependencies": {
+    "@testing-library/react-native": "^5.0.1",
     "babel-preset-expo": "^7.0.0",
-    "react-native-keyboard-spacer": "^0.4.1"
+    "jest-expo": "^35.0.0",
+    "react-native-keyboard-spacer": "^0.4.1",
+    "react-test-renderer": "^16.12.0"
   },
   "private": true
+
 }

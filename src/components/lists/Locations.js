@@ -22,7 +22,7 @@ export default class Locations extends React.Component {
   }
 
   //Function for click on an item
-  GetItem(item){
+  getItem(item){
     Alert.alert(item);
   }
 
@@ -36,7 +36,7 @@ export default class Locations extends React.Component {
             <View>
                 <TouchableOpacity
                 style={styles.item}
-                onPress={this.GetItem.bind(this, 'Id : '+item.id+' Value : '+item.value)}>
+                onPress={this.GetItem.bind(this, 'Id : ' + item.id + ' Value : ' + item.value)}>
                     <Text
                     style={styles.text}>
                     {item.value}

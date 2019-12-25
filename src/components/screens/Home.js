@@ -54,15 +54,11 @@ export default class Home extends React.Component {
     );
   }
 
-  // When user presses on one of the events, it will navigate to CardInfo screen and pass params to route
+  // When user presses on one of the events, it will navigate to EventDetails screen and pass params to route
   _onPress = (item) => {
     this.props.navigation.navigate('EventDetails', {
       propsItem: item
     });
-  }
-
-  handleSmallAnimatedIconRef = (ref) => {
-    this.smallAnimatedIcon = ref
   }
 
   render(){

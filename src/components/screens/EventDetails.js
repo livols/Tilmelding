@@ -296,8 +296,8 @@ export default class EventDetails extends React.Component {
                     containerStyle = {styles.dropdown}
                     onChangeText={(value)=> {this.setState({value});}}
                     />
-                    </View>
-                    <View style={styles.buttonContainer}>
+                  </View>
+                  <View style={styles.buttonContainer}>
                     <TouchableOpacity 
                     style={styles.button}
                     disabled={!this.state.value}

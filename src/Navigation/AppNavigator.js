@@ -6,7 +6,7 @@ import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconF from 'react-native-vector-icons/FontAwesome';
 import IconA from 'react-native-vector-icons/AntDesign';
-// Javscript files
+
 import Home from '../components/screens/Home';
 import Search from '../components/screens/Search';
 import WishList from '../components/screens/WishList';
@@ -17,7 +17,7 @@ import Login from '../components/screens/Login';
 import EventTypes from '../components/lists/EventTypes';
 import Dates from '../components/lists/Date';
 import Locations from '../components/lists/Locations';
-import EventDetails from '../components/Utils/EventDetails';
+import EventDetails from '../components/screens/EventDetails';
 import Order from '../components/screens/Order';
 import AddCreditCard from '../components/Utils/AddCreditCard';
 import Loader from '../components/Utils/Loader';
@@ -75,7 +75,7 @@ import Edit from '../components/screens/Edit';
     }, 
     Locations: {screen: Locations},
     EventDetails: {screen: EventDetails},
-    Order: {screen: Order}
+    Order: {screen: Order} 
   },{
     mode: 'modal'
   })

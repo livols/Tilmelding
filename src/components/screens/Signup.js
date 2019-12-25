@@ -15,7 +15,7 @@ export default class Signup extends React.Component {
     })
   }
 
-  // Function for user signup
+  // Function for user signup 
   signupUser = () => {
     const { name, email, password } = this.state;
     try {

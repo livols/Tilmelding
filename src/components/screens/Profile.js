@@ -5,6 +5,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';
 import 'firebase/firestore';
 import {AsyncStorage} from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
+import IconA from 'react-native-vector-icons/AntDesign';
 
 export default class Profile extends React.Component {
   // Function getUser() uses setState() in a asynchronous request to an API, 
@@ -25,7 +27,7 @@ export default class Profile extends React.Component {
     this.getUser();
   }
 
-  componentWillUnmount() {
+  componentWillUnmount() { 
     this._isMounted = false;
   }
 
@@ -111,7 +113,7 @@ export default class Profile extends React.Component {
           <View style={styles.body}>
             <View style={styles.item}>
               <View style={styles.iconContent}>
-                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/home/win8/50/ffffff'}}/>
+                <IconA name="edit" size={30} color='#ffff' />
               </View>
               <View style={styles.infoContent}>
                 <Text 
@@ -122,7 +124,7 @@ export default class Profile extends React.Component {
 
             <View style={styles.item}>
               <View style={styles.iconContent}>
-                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/settings/win8/50/ffffff'}}/>
+                <IconA name="creditcard" size={30} color='#ffff' />
               </View>
               <View style={styles.infoContent}>
                 <Text 
@@ -133,7 +135,7 @@ export default class Profile extends React.Component {
 
             <View style={styles.item}>
               <View style={styles.iconContent}>
-                <Image style={styles.icon} source={{uri: 'https://png.icons8.com/news/win8/50/ffffff'}}/>
+                <Icon name="settings" size={30} color='#ffff' />
               </View>
               <View style={styles.infoContent}>
                 <Text style={styles.info}>Settings</Text>
@@ -192,13 +194,9 @@ const styles = StyleSheet.create({
   },
   iconContent: {
     flex: 1,
+    marginTop: 20,
     alignItems: 'flex-end',
     paddingRight: 5
-  },
-  icon: {
-    width: 30,
-    height: 30,
-    marginTop: 20,
   },
   info: {
     fontSize: 18,

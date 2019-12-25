@@ -21,7 +21,7 @@ export default class Order extends React.Component {
     // Function when user pays/books an event
     onPressPayment = (item, noTickets, totalPrice) => {
       this.addEventToFirestore(item, noTickets, totalPrice);
-      this.updateTickets(item, noTickets);
+      this.updateTickets(item, noTickets); 
     }
 
     // Function for adding the booked event to firestore

@@ -17,7 +17,7 @@
       this.retrieveWishlist();
     }
   
-    // Function to retrieve events the logged in user has liked, which is stored in Firestore
+    // Function to retrieve events the logged in user has liked, which is stored in firestore
     retrieveWishlist = async () => {
       try {
         console.log('Retrieving Data');

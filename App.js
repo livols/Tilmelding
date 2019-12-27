@@ -1,3 +1,4 @@
+// App.js: when the mobile app launches, app.js is the first that starts of all the javascript files.
 import React from 'react';
 import {LoggedIn, LoggedOut} from './src/Navigation/AppNavigator';
 import * as firebase from 'firebase';
@@ -16,30 +17,32 @@ firebase.initializeApp(firebaseConfig);
 export const db = firebase.firestore();
 
 export default class App extends React.Component {
-  // The request firebase.auth().onAuthStateChanged() should be resolved before the component is unmounted. To avoid slowing down the application.
-  // Therefore variable _isMounted is used, to check if component is mounted by using a boolean.
-  _isMounted = false;
-
   constructor(props){
     super(props);
     this.state = ({
-      loggedIn: false
+      loggedIn: false,
+      // The request firebase.auth().onAuthStateChanged() should be resolved before the component is unmounted. To avoid slowing down the application.
+      // Therefore variable _isMounted is used, to check if component is mounted by using a boolean.
+      _isMounted: false
     })
+    // Temporary ignoring warnings: "componentWillReceiveProps and componentWillUpdate has been renamed, and is not recommended for use."
+    // Warning messages do not interfere with in-app functionality.
+    console.disableYellowBox = true;
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this.state._isMounted = true;
     this.isUserLoggedIn();
   }
 
   componentWillUnmount(){
-    this._isMounted= false;
+    this.state._isMounted= false;
   }
 
   // Function to check if a user is logged in or out
   isUserLoggedIn = () => {
     firebase.auth().onAuthStateChanged(user => {
-      if(this._isMounted = true){
+      if(this.state._isMounted = true){
         if (user) {
           this.setState({loggedIn: true});
         }
@@ -51,6 +54,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    // Depending on if the user is logged in or out the user will be navigated to either LoggedIn screen or LoggedOut screen
     if(this.state.loggedIn){
       return <LoggedIn/>;
     }else{

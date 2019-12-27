@@ -1,11 +1,9 @@
+// CreditCardFormView.js: renders the payment form and handles the credit card data using the CreditCardInput component.
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { CreditCardInput } from 'react-native-credit-card-input';
 import { FontAwesome } from '@expo/vector-icons';
-/**
- * Renders the payment form and handles the credit card data
- * using the CreditCardInput component.
- */
+
 export default class CreditCardFormView extends React.Component {
   constructor(props) {
     super(props);

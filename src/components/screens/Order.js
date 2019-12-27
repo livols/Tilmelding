@@ -1,3 +1,5 @@
+// Order.js: is the screen the user is navigated to when he books an event. The order summary is shown to the user,
+// and the user is able to but the event. When he buys the event, the event will be added to tickets on his profile on the mobile app.
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-elements'
@@ -5,7 +7,7 @@ import * as firebase from 'firebase';
 import 'firebase/firestore';
 
 export default class Order extends React.Component {
-    // Setting header title to 'Order'
+    // Setting header title to 'Order details'
     static navigationOptions = {
       title: 'Order details',
     };
@@ -18,7 +20,7 @@ export default class Order extends React.Component {
       return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
     }
 
-    // Function when user pays/books an event
+    // Function when user clicks and pays for an event
     onPressPayment = (item, noTickets, totalPrice) => {
       this.addEventToFirestore(item, noTickets, totalPrice);
       this.updateTickets(item, noTickets); 

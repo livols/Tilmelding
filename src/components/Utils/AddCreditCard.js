@@ -1,14 +1,12 @@
+// AddCreditCard.js: handles stripe online payment processing by sending HTTP requests to the Stripe API.
 import React from 'react';
 import AddCreditCardView from './AddCreditCardView';
 const STRIPE_ERROR = 'Payment service error. Try again later.';
 const SERVER_ERROR = 'Server error. Try again later.';
 const STRIPE_PUBLISHABLE_KEY = 'pk_test_Fga9vHLVk70TXbc7aKPmR1bY00fn7pKQJQ';
 /**
- * The method sends HTTP requests to the Stripe API.
- * It's necessary to manually send the payment data
- * to Stripe because using Stripe Elements in React 
- * Native apps isn't possible.
- *
+ * the method sends HTTP requests to the Stripe API. It's necessary to manually send the payment data
+ * to Stripe because using Stripe Elements in React Native apps isn't possible.
  * @param creditCardData the credit card data
  * @return Promise with the Stripe data
  */
@@ -39,7 +37,6 @@ const getCreditCardToken = (creditCardData) => {
 };
 /**
  * The method imitates a request to our server.
- *
  * @param creditCardToken
  * @return {Promise<Response>}
  */
@@ -98,7 +95,7 @@ export default class AddCreditCard extends React.Component {
     }
   };
   
-  // render the subscription view component and pass the props to it
+  // Render the AddCreditCardView component and pass the props to it
   render() {
     const { submitted, error } = this.state;
     return (

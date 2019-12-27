@@ -1,6 +1,6 @@
+// EventTypes.js: this is the screen the user should be able to choose event type, when he is searching for a specific event in Search.js. 
 import React from 'react';
-import { StyleSheet, FlatList, Text, View, Alert, TouchableHighlight, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { StyleSheet, FlatList, Text, View, Alert, TouchableOpacity } from 'react-native';
 
 export default class EventTypes extends React.Component {
   static navigationOptions = {
@@ -20,7 +20,7 @@ export default class EventTypes extends React.Component {
     };
   }
 
-  //Function for click on an item
+  // Function for click on an item
   getItem(item){
     Alert.alert(item);
   }
@@ -31,7 +31,6 @@ export default class EventTypes extends React.Component {
         <FlatList
           data={this.state.eventTypes}
           renderItem={({ item }) => (
-            // Single Comes here which will be repeatative for the FlatListItems
             <View>
                 <TouchableOpacity
                 style={styles.item}

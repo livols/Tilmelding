@@ -1,3 +1,5 @@
+// TicketDetails.js: is the screen the logged in user will be navigated to when he clicks on one of the bought tickets in screen Tickets.js.
+// This screen will show more details about a specific ticket.
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import QRCode from 'react-qr-code';
@@ -5,7 +7,7 @@ import { Card } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default class TicketDetails extends React.Component {
-    // Setting header title to 'Ticket Details'
+    // Setting header title to 'Ticket details'
     static navigationOptions = {
       title: 'Ticket details',
     };

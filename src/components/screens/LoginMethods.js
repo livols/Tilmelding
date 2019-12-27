@@ -1,4 +1,5 @@
-// LoginMethods.js: is a second login screen for user.
+// LoginMethods.js: is a second login screen for user, this screen shows other ways to login into the mobile app.
+// The login methods are logging in with e.g. Google, Yahoo or Twitter.
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -30,6 +31,7 @@ export default class LoginMethods extends React.Component {
       <View style={styles.container}>
         <Logo/>
         <View style={styles.formContainer}>
+          {/* Button for google login */}
           <TouchableOpacity 
           style={styles.googleButton}
           onPress={() => this.loginGoogle()}>
@@ -39,6 +41,7 @@ export default class LoginMethods extends React.Component {
               <Text style={styles.googleButtonText}> Continue with Google</Text>
             </View>
           </TouchableOpacity>
+          {/* Button for yahoo login */}
           <TouchableOpacity 
           style={styles.yahooButton}
           onPress={() => this.loginYahoo()}>
@@ -47,6 +50,7 @@ export default class LoginMethods extends React.Component {
               <Text style={styles.buttonText}> Continue with Yahoo</Text>
             </View>
           </TouchableOpacity>
+          {/* Button for twitter login */}
           <TouchableOpacity 
           style={styles.twitterButton}
           onPress={() => this.loginTwitter()}>

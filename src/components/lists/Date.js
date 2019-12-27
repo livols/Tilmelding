@@ -1,3 +1,4 @@
+// Date.js: this is the screen the user should be able to choose a date for events, he is searching for in Search.js.
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 

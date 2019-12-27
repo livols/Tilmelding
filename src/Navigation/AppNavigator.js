@@ -25,7 +25,7 @@ import LoginMethods from '../components/screens/LoginMethods';
 import TicketDetails from '../components/screens/TicketDetails';
 import Edit from '../components/screens/Edit';
 
-  // Stacknavigator for bottom tab 'profile'
+  // Stacknavigator for bottom tab 'profile' in bottom tab navigator
   const ProfileStack = createStackNavigator({
     Profile: {
       screen: Profile,
@@ -39,7 +39,7 @@ import Edit from '../components/screens/Edit';
     mode: 'modal'
   })
 
-  // Stacknavigator for bottom tab 'wishlist'
+  // Stacknavigator for bottom tab 'wishlist' in bottom tab navigator
   const WishlistStack = createStackNavigator({
     WishList: {
       screen: WishList,
@@ -52,7 +52,7 @@ import Edit from '../components/screens/Edit';
     mode: 'modal'
   })
 
-  // Stacknavigator for bottom tab 'tickets'
+  // Stacknavigator for bottom tab 'tickets' in bottom tab navigator
   const TicketsStack = createStackNavigator({
     Tickets: {
       screen: Tickets,
@@ -65,7 +65,7 @@ import Edit from '../components/screens/Edit';
     mode: 'modal'
   })
 
-  // Stacknavigator for bottom tab 'home'
+  // Stacknavigator for bottom tab 'home' in bottom tab navigator
   const HomeStack = createStackNavigator({
     Home: {
       screen: Home,
@@ -80,7 +80,7 @@ import Edit from '../components/screens/Edit';
     mode: 'modal'
   })
 
-  // Stacknavigator for bottom tab 'search'
+  // Stacknavigator for bottom tab 'search' in bottom tab navigator
   const SearchStack = createStackNavigator({
     Search: {
       screen: Search,

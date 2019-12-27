@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 
 export default class Loader extends React.Component {
   componentDidMount() {
+    // Navigating the user to either Home or Login screen, depending on if he is logged in or out
     firebase.auth().onAuthStateChanged(user => {
       this.props.navigation.navigate(user ? 'Home' : 'Login')
     })

@@ -1,4 +1,4 @@
-// Login.js: is the login screen for user.
+// Login.js: is the login screen for user, when user is not logged into the mobile app.
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';

@@ -18,7 +18,7 @@
       this.retrieveBookedEvents();
     }
   
-    // Function to retrieve tickets logged in user has booked, which is stored in Firestore
+    // Function to retrieve tickets logged in user has booked, which is stored in firestore
     retrieveBookedEvents = async () => {
       try {
         console.log('Retrieving Data');

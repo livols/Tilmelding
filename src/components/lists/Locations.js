@@ -1,3 +1,4 @@
+// Locations.js: this is the screen the user should be able to choose a location for events, he is searching for in Search.js.
 import React from 'react';
 import { StyleSheet, FlatList, Text, View, Alert, TouchableOpacity, Dimensions } from 'react-native';
 
@@ -21,7 +22,7 @@ export default class Locations extends React.Component {
     };
   }
 
-  //Function for click on an item
+  // Function for click on an item
   getItem(item){
     Alert.alert(item);
   }

@@ -1,3 +1,4 @@
+// Logo.js: renders the logo for Tilmelding.fo, with a welcome text.
 import React from 'react';
 import { StyleSheet, View, Image, Text } from 'react-native';
 

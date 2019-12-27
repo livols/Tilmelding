@@ -1,5 +1,8 @@
+// Search.js: is the screen were the user is able to search for some specific event, by choosing which type of event, 
+// which location it should occur, and which date. 
+// 'Search for event' inputfield, is the field were the user should be able to search for event by name.
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Input } from 'react-native-elements';
 
@@ -7,6 +10,7 @@ export default class Search extends React.Component {
     render(){
       return (
         <View style={styles.container}>
+          {/* Inputfield for searching for an event by name */} 
           <View style={styles.searchFieldContainer}>
             <Input
             placeholder=' Search for event...'
@@ -25,22 +29,26 @@ export default class Search extends React.Component {
           </View>
           <View style={styles.inputFieldContainer}>
           <Text style={styles.text}>Looking for</Text>
+            {/* Type of event button */} 
             <TouchableOpacity
             onPress={() => this.props.navigation.navigate('EventTypes')}>
                 <Text style={styles.searchButtonText}>Type of Event</Text>
             </TouchableOpacity>
             <View style={{marginVertical:15}}></View>
             <Text style={styles.text}>In</Text>
+            {/* Location button */} 
             <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Locations')}>
                 <Text style={styles.searchButtonText}>Location</Text>
             </TouchableOpacity>
             <View style={{marginVertical:15}}></View>
             <Text style={styles.text}>On</Text>
+            {/* Date button */} 
             <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Date')}>
                 <Text style={styles.searchButtonText}>Date</Text>
             </TouchableOpacity>
+            {/* Button to find the event, by using the specfications chosen above: type of event, location and date */} 
             <View style={{marginVertical:30, alignItems: 'center'}}>
               <TouchableOpacity style={styles.button}>
                   <Text style={styles.buttonText}>Find event</Text>

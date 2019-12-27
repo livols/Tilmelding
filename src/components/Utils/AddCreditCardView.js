@@ -1,11 +1,10 @@
+// AddCreditCardView.js: this class renders a view with CreditCardFormView.
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import CreditCardFormView from './CreditCardFormView';
 import { Card } from 'react-native-elements'
-/**
- * The class renders a view with PaymentFormView
- */
+
 export default class AddCreditCardView extends React.Component {
   render() {
     return (

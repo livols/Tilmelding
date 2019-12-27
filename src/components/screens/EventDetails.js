@@ -9,9 +9,11 @@ import { Dropdown } from 'react-native-material-dropdown';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import * as firebase from 'firebase';
 
+// Creating an animated icon by combining library's react-native-vector-icons/AntDesign and react-native-animatable
 const AnimatedIcon = Animatable.createAnimatableComponent(Icon);
 
 export default class EventDetails extends React.Component {
+  // Setting header title to 'EventDetails'
     static navigationOptions = {
       title: 'Event details',
     };
@@ -39,7 +41,7 @@ export default class EventDetails extends React.Component {
         this.removeItem();
       }
 
-      // Function to remove items from array dropDownTickets, so that it matches with available tickets, which is registered on the database
+      // Function to remove items from array dropDownTickets, so that it matches with available tickets on firestore database
       removeItem() {
         const item = this.props.navigation.getParam('propsItem');
         this.setState({
@@ -70,13 +72,13 @@ export default class EventDetails extends React.Component {
         // Firstly, we stop any occuring animation
         this.largeAnimatedIcon.stopAnimation();
         
-        // If the Photo is already liked, there's a different animation for a small heart icon, it's a little subtle animation
+        // If the image is already liked, there's a different animation for a small heart icon, it's a little subtle animation
         if (this.state.liked) {
           this.largeAnimatedIcon.bounceIn()
             .then(() => this.largeAnimatedIcon.bounceOut());
           this.smallAnimatedIcon.pulse(200);
         } else {
-          // The Animation chain for the main animation when liking the photo occurs by double tapping
+          // The animation chain for the main animation when liking the image occurs by double tapping
           // Each animation is returning a promise, that's why we can chain them in a smooth sequence of animations
           this.largeAnimatedIcon.bounceIn()
             .then(() => {
@@ -89,7 +91,7 @@ export default class EventDetails extends React.Component {
       // Function for handling press on image, that invokes the big and small heart by using function animateIcon()
       handleOnPress = () => {
         const time = new Date().getTime();
-        // This delta determines time passed since last press on the photo
+        // This delta determines time passed since last press on the image
         const delta = time - this.lastPress;
         const doublePressDelay = 400; // ms
       
@@ -111,7 +113,7 @@ export default class EventDetails extends React.Component {
         this.lastPress = time;
       }
       
-      // Function for handling press on the small icon heart (below image)
+      // Function for handling press only on the small icon heart (below image)
       // Activates smart heart animation
       handleOnPressLike = () => {
         this.smallAnimatedIcon.bounceIn();
@@ -136,7 +138,7 @@ export default class EventDetails extends React.Component {
             var db = firebase.firestore(); // Initialize firestore database
     
             // Getting the currently logged in user, and creating a new collection under that user called wishlist
-            // in colllection wishlist, some fields are set
+            // In colllection wishlist, some fields are set
             db.collection('users').doc(userUid).collection('wishlist').doc(item.id).set(
               {
                 id: item.id, // Event id

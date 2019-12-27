@@ -1,3 +1,4 @@
+// Setup for jest
 jest.mock('Linking', () => ({
   addEventListener: jest.fn(),
   removeEventListener: jest.fn(),

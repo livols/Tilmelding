@@ -1,5 +1,5 @@
 // Profile.js: is the screen, user information will be displayed.
-// User also able to edit his own user information.
+// User also able to edit his own user information and add a credit card to his profile.
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';
@@ -9,26 +9,25 @@ import Icon from 'react-native-vector-icons/Feather';
 import IconA from 'react-native-vector-icons/AntDesign';
 
 export default class Profile extends React.Component {
-  // Function getUser() uses setState() in a asynchronous request to an API, 
-  // and the request should be resolved before the component is unmounted. To avoid slowing down the application.
-  // Therefore variable _isMounted is used, to check if component is mounted by using a boolean.
-  _isMounted = false;
-
   constructor(props){
     super(props);
     this.state = ({
       name: '',
-      email: ''
+      email: '',
+      // Function getUser() uses setState() in a asynchronous request to an API, 
+      // and the request should be resolved before the component is unmounted. To avoid slowing down the application.
+      // Therefore variable _isMounted is used, to check if component is mounted by using a boolean.
+      _isMounted: false
     })
   }
 
   componentDidMount() {
-    this._isMounted = true;
+    this.state._isMounted = true;
     this.getUser();
   }
 
   componentWillUnmount() { 
-    this._isMounted = false;
+    this.state._isMounted = false;
   }
 
   // Function to fetch user data via HTTP request, when user signs in with facebook. Data stored in facebook.
@@ -39,7 +38,7 @@ export default class Profile extends React.Component {
       // Using the token for making the graphQL request to facebook
       const response = await fetch(`https://graph.facebook.com/me/?fields=id,name,email&access_token=${token}`);
       const user = await response.json(); // user object is now stored in this variable
-      if (this._isMounted) {
+      if (this.state._isMounted) {
         this.setState({name: user.name}); // set the state name
         this.setState({email: user.email}); // set the state email
       }
@@ -55,14 +54,14 @@ export default class Profile extends React.Component {
     // and where email matches the currently logged in users email
     db.collection('users').where('email', '==', user.email)
       .get()
-      // Using querysnapshot to read from the document in Firestore database
+      // Using querysnapshot to read from the document in firestore database
       .then((querySnapshot) => {
-        // Using forEach to store the document in variable data
+        // Using forEach to store the document in variable called data
         querySnapshot.forEach((doc) => {
           var data = doc.data();
-          if(this._isMounted) {
-            this.setState({name: data.name}); // set state name
-            this.setState({email: data.email}); // set state email
+          if(this.state._isMounted) {
+            this.setState({name: data.name}); // Set state variable name
+            this.setState({email: data.email}); // Set state variable email
           }
         });
       })
@@ -94,13 +93,14 @@ export default class Profile extends React.Component {
         console.log('Signed Out');
       }); 
     } catch (error) {
-      console.error('Sign Out Error', error);
+        console.error('Sign Out Error', error);
     }
   };
 
   render() {
     return (
       <View style={styles.container}>
+          {/* Header which includes: image, name and email */}  
           <View style={styles.header}>
             <View style={styles.headerContent}>
                 <Image style={styles.avatar}
@@ -109,20 +109,22 @@ export default class Profile extends React.Component {
                 <Text style={styles.userInfo}>{this.state.email}</Text>
             </View>
           </View>
-
+          {/* Body which includes buttons: edit, add credit card and settings. And a button to logout */} 
           <View style={styles.body}>
             <View style={styles.item}>
+              {/* Edit profile information button */} 
               <View style={styles.iconContent}>
                 <IconA name="edit" size={30} color='#ffff' />
               </View>
               <View style={styles.infoContent}>
                 <Text 
                 style={styles.info}
-                onPress={() => this.props.navigation.navigate('Edit')}>Edit Info</Text>
+                onPress={() => this.props.navigation.navigate('Edit')}>Edit profile info</Text>
               </View>
             </View>
 
             <View style={styles.item}>
+              {/* Add credit card button */} 
               <View style={styles.iconContent}>
                 <IconA name="creditcard" size={30} color='#ffff' />
               </View>
@@ -134,6 +136,7 @@ export default class Profile extends React.Component {
             </View>
 
             <View style={styles.item}>
+              {/* Settings button */} 
               <View style={styles.iconContent}>
                 <Icon name="settings" size={30} color='#ffff' />
               </View>
@@ -141,6 +144,7 @@ export default class Profile extends React.Component {
                 <Text style={styles.info}>Settings</Text>
               </View>
             </View>
+              {/* Logout button */} 
               <TouchableOpacity 
               style={styles.button}
               onPress={() => this.logout()}>

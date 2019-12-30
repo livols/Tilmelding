@@ -28,7 +28,14 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.tilmelding.tilmelding"
+      "package": "com.tilmelding.tilmelding",
+      "versionCode": 2,
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_PHONE_STATE",
+        "READ_CONTACTS"
+      ]
     }
   }
 }
